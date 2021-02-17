@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "lexicon74326365": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-lexicon-dev-133118-authRole",
+      "UnauthRoleArn": "arn:aws:iam::273706657348:role/amplify-lexicon-dev-133118-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::273706657348:role/amplify-lexicon-dev-133118-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-lexicon-dev-133118-deployment",
+      "UnauthRoleName": "amplify-lexicon-dev-133118-unauthRole",
+      "StackName": "amplify-lexicon-dev-133118",
+      "StackId": "arn:aws:cloudformation:us-east-1:273706657348:stack/amplify-lexicon-dev-133118/8c4b5920-708d-11eb-82b1-1208f0f76cbf",
+      "AmplifyAppId": "d2tfthyizlxdv6"
+    }
+  },
+  "auth": {
+    "lexicon74326365": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-lexicon-dev-133118-deployment/amplify-cfn-templates/auth/lexicon74326365-cloudformation-template.yml",
+        "logicalId": "authlexicon74326365"
+      },
+      "lastPushTimeStamp": "2021-02-16T19:39:21.957Z",
+      "output": {
+        "UserPoolId": "us-east-1_jW8fpxDr7",
+        "AppClientIDWeb": "4imf0k19mrm90p842sa3q389e5",
+        "AppClientID": "6vcg69kilf5f0533a9bnn2iv1b",
+        "IdentityPoolId": "us-east-1:9146e273-8706-4ce4-b366-1a21f6033172",
+        "IdentityPoolName": "lexicon74326365_identitypool_74326365__dev",
+        "UserPoolName": "lexicon74326365_userpool_74326365"
+      },
+      "lastPushDirHash": "wR3RqvheMne+5+BEZKG15vPckpE="
+    }
+  }
+}

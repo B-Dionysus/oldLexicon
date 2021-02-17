@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=PT+Sans&display=swap" rel="stylesheet">
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>Benjamin Dionysus</title>
+    <script src="https://kit.fontawesome.com/a86abafd67.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="main">
+
+      <div className="pure-g">
+        
+        
+        <form onSubmit={onSubmit}>
+        <div className="pure-u-1-4"></div>
+        <div className="pure-u-1-4"><h3>Player Information</h3>
+          <div className="form-group">
+            <label htmlFor="playerName">Player Name</label>
+            <input
+              type="text"
+              name="playerName"
+              value={playerName}
+              onChange={onChange}
+              required
+              placeholder="John Smith"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={onChange}
+              required
+              placeholder="Smith@john.com"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={onChange}
+              required
+              minLength="6"
+              placeholder="Password"                
+              autoComplete="on" 
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password2">Confrim Password</label>
+            <input
+              type="password"
+              name="password2"
+              value={password2}
+              onChange={onChange}
+              required
+              minLength="6"
+              placeholder="Confirm Password"
+              autoComplete="on" 
+            />
+          </div>
+        
+        </div>
+        <div className="pure-u-1-4"><h3>Character Information</h3>
+        
+          <div className="form-group">
+            
+            <label htmlFor="photoupload">Player Image (optional)</label>
+            <input id="photoupload"  name="photoupload" onChange={uploadFile} type="file" accept="image/*" />
+            <label htmlFor="charName">Player Name</label>
+            <input
+              type="text"
+              name="charName"
+              value={charName}
+              onChange={onChange}
+              required
+              placeholder="Dr. Prextron Deviatree"
+            />
+          </div>
+        </div>
+        <div className="pure-u-1-4"></p></div>
+    </div>
+    <div className="pure-g">
+      
+      <div className="pure-u-1-3"></p></div>
+      <div className="pure-u-2-3">
+        <input type="submit" value="Register" className="btn" />
+      </div>
+      
+      <div className="pure-u-1-3"></p></div>
+    </form>
+    </div>
+    </div>
+   
+  </body>
+</html>
