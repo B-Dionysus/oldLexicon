@@ -16,5 +16,18 @@
         "lexicon74326365": {}
       }
     }
+  },
+  "lexicon": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-lexicon-lexicon-151528-authRole",
+      "UnauthRoleArn": "arn:aws:iam::273706657348:role/amplify-lexicon-lexicon-151528-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::273706657348:role/amplify-lexicon-lexicon-151528-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-lexicon-lexicon-151528-deployment",
+      "UnauthRoleName": "amplify-lexicon-lexicon-151528-unauthRole",
+      "StackName": "amplify-lexicon-lexicon-151528",
+      "StackId": "arn:aws:cloudformation:us-east-1:273706657348:stack/amplify-lexicon-lexicon-151528/6d275b50-722e-11eb-bb95-123f2d95f4cf",
+      "AmplifyAppId": "d2tfthyizlxdv6"
+    }
   }
 }
