@@ -36,18 +36,21 @@ export async function resendConfirmationCode(username) {
     }
 }
 export async function getUser(){
-    try{
-        const user=await Auth.currentAuthenticatedUser()
-        return(user);
-    }
-    catch (err) {
-        console.log('error getting user: ', err);
-    }
+    // try{
+    //     const user=await Auth.currentAuthenticatedUser()
+    //     return(user);
+    // }
+    // catch (err) {
+    //     console.log('error getting user: ', err);
+    //     return "";
+    // }
+    return Auth.currentAuthenticatedUser()
 }
 export async function signOut() {
-    try {
-        await Auth.signOut();
-    } catch (error) {
-        console.log('error signing out: ', error);
-    }
+    // try {
+    //     await Auth.signOut();
+    // } catch (error) {
+    //     console.log('error signing out: ', error);
+    // }
+    Auth.signOut();
 }

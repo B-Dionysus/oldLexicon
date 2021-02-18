@@ -1,65 +1,76 @@
-import React, { useState, useContext, useEffect, Fragment } from "react";
+import { useState, useContext, useEffect, Fragment } from "react";
+import NavBar from "../NavBar";
 import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
 import { Link } from "react-router-dom";
+import { Auth } from 'aws-amplify';
 // import styled from "styled-components";
 // import Nav from "../layout/Nav";
 
 const Login = (props) => {
+  let submitting:bool=false; // We want to avoid submitted user information while waiting for a response from AWS
   const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
+  // const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
-  const { loginUser, error, clearErrors, isAuthenticated } = authContext;
+  // const { loginUser, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
-    if (isAuthenticated) {
+    Auth.currentAuthenticatedUser()
+    .then(res=>{
+      console.log(res);
       props.history.push("/");
-    }
-    if (error === "Invalid Credentials") {
-      setAlert(error, "danger");
-      clearErrors();
-    }
+    })
+    .catch(err=>{
+
+    })
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, []);
 
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
+  const [user, setUser] = useState({connected:false});
 
-  const { email, password } = user;
+  const { username, password } = user;
 
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
+    if (username === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
-    } else {
-      loginUser({
-        email,
-        password,
-      });
+    } 
+    if(submitting){
+      
+    }else {
+      submitting=true;
+      Auth.signIn(username, password)
+      .then((res)=>{
+        console.log(res);
+        submitting=false;
+        props.history.push("/");
+      })
+      .catch(err=>{        
+        setAlert(err.message, "danger");
+      })
     }
   };
 
   return (
     <Fragment>
-        <div className="form-container">
+         <NavBar user={user} />
+        <div className="form-container main">
           <h1>
             Account <span>Login</span>
           </h1>
           <form onSubmit={onSubmit}>
             <div className="form-group">
-              <label htmlFor="email"></label>
+              <label htmlFor="username"></label>
               <input
-                type="email"
-                name="email"
-                value={email}
+                type="username"
+                name="username"
+                value={username}
                 onChange={onChange}
                 required
-                placeholder="Email"
+                placeholder="Username"
               />
             </div>
             <div className="form-group">
@@ -67,6 +78,7 @@ const Login = (props) => {
               <input
                 type="password"
                 name="password"
+                autoComplete="off"
                 value={password}
                 onChange={onChange}
                 required

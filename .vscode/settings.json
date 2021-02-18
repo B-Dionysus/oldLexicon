@@ -9,6 +9,6 @@
     "amplify/backend/awscloudformation": true
   },
   "favorites.resources": [
-    "client\\src\\App.css"
+    "client\\src\\css\\App.css"
   ]
 }
