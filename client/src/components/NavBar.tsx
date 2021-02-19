@@ -31,17 +31,19 @@ const NavBar = (props:any) => {
   return (
     <nav className="pure-g nav">
       
-      <span className="pure-u-1-3" onClick={reg}>Register (AWS)</span>
+      <NavLink to="/test">
+        <span  className="pure-u-1-3">Secret Page</span>
+      </NavLink>
       {!user || !user.username ? 
       (
-        <span className="pure-u-1-3" onClick={login}>Login (AWS)</span>
+        <>
+          <span className="pure-u-1-3" onClick={login}>Login (AWS)</span>
+          <span className="pure-u-1-3" onClick={reg}>Register (AWS)</span>
+        </>
       ) : 
       (
         <span className="pure-u-1-3" onClick={logout}>Logout (AWS)</span>
       )}
-      <NavLink to="/test">
-        <span  className="pure-u-1-3">Secret Page</span>
-      </NavLink>
     </nav>
   );
 };

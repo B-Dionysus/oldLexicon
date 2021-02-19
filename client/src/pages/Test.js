@@ -1,20 +1,25 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import AuthContext from "../context/auth/authContext";
 import { Link } from "react-router-dom";
-const Landing = () => {
-  const authContext = useContext(AuthContext);
+import NavBar from "../components/NavBar";
+const Test = (props) => {
+  // const authContext = useContext(AuthContext);
 
-  const { user } = authContext;
+  console.log(props);
+  // const { user } = authContext;
   useEffect(() => {
-    authContext.loadUser();
+    // authContext.loadUser();
     // eslint-disable-next-line
   }, []);
 
   return (
-<div className="">
-  Hello!
-</div>
+    <>
+      <NavBar user={props.user}/>
+      <div className="">
+        Hello!
+      </div>
+    </> 
   );
 };
 
-export default Landing;
+export default Test;

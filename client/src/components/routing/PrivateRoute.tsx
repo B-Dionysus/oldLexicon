@@ -1,25 +1,28 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
-import AuthContext from "../../context/auth/authContext";
+// import AuthContext from "../../context/auth/authContext";
 interface PrivateRouteProps {
   // tslint:disable-next-line:no-any
   component: any,
+  user:any,
   path:string
 }
+
 const PrivateRoute = (props:PrivateRouteProps) => {
   
-  const authContext = useContext(AuthContext);
-  const { component: Component, ...rest } = props;
-  const { isAuthenticated, loading } = authContext;
+  console.log(props.user);
+  // const authContext = useContext(AuthContext);
+  const { component: Component, user, ...rest } = props;
+  // const { isAuthenticated, loading } = authContext;
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        !isAuthenticated && !loading ? (
+          !user.username ? (
           <Redirect to="/register" />
         ) : (
-          <Component {...props} />
+          <Component {...props} user={user}/>
         )
       }
     />
