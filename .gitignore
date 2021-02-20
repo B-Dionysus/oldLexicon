@@ -6,13 +6,13 @@ client/node_modules
 /.pnp
 .pnp.js
 
-// mongoose
+# mongoose
 default.json
 production.json
 
 # testing
 /coverage
-
+/images
 # production
 /build
 

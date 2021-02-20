@@ -64,7 +64,7 @@ const Login = (props:any) => {
 
   return (
     <Fragment>
-         <NavBar user={props.user} />
+         <NavBar />
         <div className="form-container main">
           <h1>
             Account <span>Login</span>

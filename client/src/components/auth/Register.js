@@ -1,27 +1,19 @@
+
+
 import React, { useContext, useState, useEffect, Fragment } from "react";
+import NavBar from "../NavBar";
 import AlertContext from "../../context/alert/alertContext";
-import AuthContext from "../../context/auth/authContext";
+import AWSContext from "../../context/auth/AWSContext";
 import S3 from "../../utils/S3";
 import UserImage from "../UserImage";
-// import Nav from "../layout/Nav";
-
+import "../../css/register.css"
 const Register = (props) => {
-  const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
-  const [userPic, setUserPic] = useState("https://capestylemag.com/wp-content/uploads/2017/11/missing.jpg");
+  const alertContext = useContext(AlertContext); 
+  const awsContext = useContext(AWSContext); 
+  const [userPic, setUserPic] = useState("https://lexicon-image-storage.s3.amazonaws.com/testImage/optional.jpg");
   const { setAlert } = alertContext;
-  const { register, error, clearErrors, isAuthenticated } = authContext;
+  const { user:awsUser } = awsContext;
   const userDirectory="testImage";
-  useEffect(() => {
-    if (isAuthenticated) { 
-      props.history.push("/");
-    }
-    if (error === "User already exists") {
-      setAlert(error, "danger");
-      clearErrors();
-    }
-    // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
     name: "",
@@ -56,16 +48,16 @@ const Register = (props) => {
     } else if (password !== password2) {
       setAlert("Passwords do not match", "danger");
     } else {
-      register({ playerName, email, password, charName, userPic});
+      // register({ playerName, email, password, charName, userPic});
     }
   };
 
   return (
-    <Fragment>
-      <div className="pure-g">
-        <div className="pure-u-1-4"></div>
+    <>
+      <NavBar />
+      <div className="reg-main">
         <form>
-        <div className="pure-u-1-4">
+        <div className="reg-form user-form">
           <label htmlFor="playerName">Player Name</label>
           <input
           type="text"
@@ -107,9 +99,10 @@ const Register = (props) => {
           autoComplete="on" 
           />
         </div>
-        <div className="pure-u-1-4">
+        <div className="reg-form char-form">
           <label htmlFor="photoupload">Character Image (optional)</label>
           <input id="photoupload"  name="photoupload" onChange={uploadFile} type="file" accept="image/*" />
+          <UserImage image={userPic}/> 
           <label htmlFor="charName">Player Name</label>
           <input
           type="text"
@@ -119,18 +112,16 @@ const Register = (props) => {
           required
           placeholder="Dr. Prextron Deviatree"
           />
-        </div>
-        
-        <div className="pure-u-1-4"></div>
-        <div className="pure-g">
+        </div>        
+        <div className="">
           <input type="submit" value="Register" className="btn" />
         </div>
       </form>      
     </div> 
     <div>
-      <UserImage image={userPic}/> 
+      <div className="cloud cloud2"/> 
     </div>
-    </Fragment>
+    </>
   );
 };
 

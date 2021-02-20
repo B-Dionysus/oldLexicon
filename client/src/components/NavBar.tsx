@@ -1,29 +1,19 @@
-// import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import '../css/navBar.css';
 import { NavLink } from "react-router-dom";
 import {signUp} from "./auth/AWS";
 import { Auth } from 'aws-amplify';
+import AWSContext from "../context/auth/AWSContext";
 
-const NavBar = (props:any) => {
+const NavBar = () => {
 
-  let user=props.user;
-  function reg(){
-    signUp("Benjamin", "password", "b@sixbynine.com");
-  }
-  function login(){
-    try {
-      Auth.signIn("Benjamin", "password")
-      .then(()=>props.checkUser());
-    }
-    catch (error) {
-        console.log('error signing in', error);
-    }
-    
-  }
+  const awsContext = useContext(AWSContext); 
+  let user=awsContext.user;
+  
   async function logout(){
     try {
         await Auth.signOut();
-        props.checkUser();
+        awsContext.checkUser();
     } catch (error) {
         console.log('error signing out: ', error);
     }
@@ -31,14 +21,25 @@ const NavBar = (props:any) => {
   return (
     <nav className="pure-g nav">
       
+      <NavLink to="/">
+        <span  className="pure-u-1-3">Home Page</span>
+      </NavLink>
+      
       <NavLink to="/test">
         <span  className="pure-u-1-3">Secret Page</span>
       </NavLink>
       {!user || !user.username ? 
       (
         <>
-          <span className="pure-u-1-3" onClick={login}>Login (AWS)</span>
-          <span className="pure-u-1-3" onClick={reg}>Register (AWS)</span>
+          <span className="pure-u-1-3">
+            <NavLink to="login">
+              Login
+            </NavLink>  
+          </span>
+          
+          <NavLink to="register">
+              Register
+          </NavLink>  
         </>
       ) : 
       (
