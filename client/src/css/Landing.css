@@ -13,7 +13,7 @@
     height:117px;
     animation-iteration-count: infinite;
     overflow:hidden;
-
+    z-index:0;
 }
 @keyframes cloud1{
     0% {left:0px;}

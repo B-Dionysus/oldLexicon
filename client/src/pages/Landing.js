@@ -1,6 +1,6 @@
 import '../css/Landing.css';
 import { useState, useContext, useEffect } from "react";
-
+import Book from "../components/Book"
 import AWSContext from "../context/auth/AWSContext";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
@@ -23,6 +23,7 @@ const Landing = (props) => {
             </Link>
           )}
         </div>
+        <Book />
         <div className="cloud cloud1" /> 
         <div className="cloud cloud2" /> 
     </>

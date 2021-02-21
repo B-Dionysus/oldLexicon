@@ -19,19 +19,19 @@ const NavBar = () => {
     }
   }
   return (
-    <nav className="pure-g nav">
+    <nav className="nav">
       
       <NavLink to="/">
-        <span  className="pure-u-1-3">Home Page</span>
+        <span  className="">Home Page</span>
       </NavLink>
       
       <NavLink to="/test">
-        <span  className="pure-u-1-3">Secret Page</span>
+        <span  className="">Secret Page</span>
       </NavLink>
       {!user || !user.username ? 
       (
         <>
-          <span className="pure-u-1-3">
+          <span className="">
             <NavLink to="login">
               Login
             </NavLink>  
@@ -43,7 +43,7 @@ const NavBar = () => {
         </>
       ) : 
       (
-        <span className="pure-u-1-3" onClick={logout}>Logout (AWS)</span>
+        <span className="" onClick={logout}>Logout (AWS)</span>
       )}
     </nav>
   );
