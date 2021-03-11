@@ -2,61 +2,92 @@
 
 import React, { useContext, useState, useEffect, Fragment } from "react";
 import NavBar from "../NavBar";
+import Book from "../Book";
 import AlertContext from "../../context/alert/alertContext";
 import AWSContext from "../../context/auth/AWSContext";
 import S3 from "../../utils/S3";
 import UserImage from "../UserImage";
 import "../../css/register.css"
-const Register = (props) => {
+import { Auth } from 'aws-amplify';
+const Register = () => {
   const alertContext = useContext(AlertContext); 
   const awsContext = useContext(AWSContext); 
-  const [userPic, setUserPic] = useState("https://lexicon-image-storage.s3.amazonaws.com/testImage/optional.jpg");
+  const [characterImage, setUserPic] = useState("https://lexicon-image-storage.s3.amazonaws.com/testImage/optional.jpg");
   const { setAlert } = alertContext;
   const { user:awsUser } = awsContext;
   const userDirectory="testImage";
 
   const [user, setUser] = useState({
-    name: "",
+    playerName: "",
     email: "",
     password: "",
     password2: "",
+    characterName:""
   });
 
-  const { playerName, email, password, password2, charName } = user;
+  const { playerName, email, password, password2, characterName } = user;
+  let submitting:boolean=false;
+  const onChange = (e:any) => setUser({ ...user, [e.target.name]: e.target.value });
 
-  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
-
-  const uploadFile=(e)=>{
+  const uploadFile=(e:any)=>{
+    e.preventDefault();
     // check to make sure there is now a file to upload
     // and then:
     S3.addPhoto(userDirectory) 
-    .then((res)=>{
+    .then((res:any)=>{
       console.log(res);
       setUserPic(res.Location);
     })
-    .catch((err)=>{
+    .catch(()=>{
       // User did not select a photo (perhaps that chose "Cancel" in the file manager)
       return false;    
     })
-    // Please don't forget to add tests!
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = (e:any) => {
     e.preventDefault();
-    if (playerName === "" || charName === "" || email === "" || password === "") {
+    if (playerName === "" || characterName === "" || email === "" || password === "") {
       setAlert("Please enter all fields", "danger");
     } else if (password !== password2) {
       setAlert("Passwords do not match", "danger");
     } else {
-      // register({ playerName, email, password, charName, userPic});
+      if(submitting){        
+        // is submitting is true, then the user has hit submit once already.
+        // don't do anything--we don't want to flood the system with login calls.
+      }
+      else{
+        submitting=true;
+        console.log("submitting!");
+        // Turn on loading image
+        (document.getElementsByClassName("frame") as HTMLCollectionOf<HTMLElement>)[0].style.display="block";
+        let username=playerName;
+        Auth.signUp({
+          username,
+          password,
+          attributes: {email, "custom:characterImage":characterImage, "custom:characterName":characterName}
+        })
+        .then((res)=>{      
+          console.log(res);
+          submitting=false;
+          // Turn off loading image
+          (document.getElementsByClassName("frame") as HTMLCollectionOf<HTMLElement>)[0].style.display="hidden";
+          window.location.href = '/confirm';         
+        })
+        .catch((err)=>{        
+          // Turn off loading image
+          (document.getElementsByClassName("frame") as HTMLCollectionOf<HTMLElement>)[0].style.display="hidden";  
+          console.log(err);
+        });
+      }
     }
   };
-
+  let minPasswordLength = 6;
   return (
     <>
       <NavBar />
+      <Book display={submitting} />
       <div className="reg-main">
-        <form>
+        <form onSubmit={onSubmit}>
         <div className="reg-form user-form">
           <label htmlFor="playerName">Player Name</label>
           <input
@@ -65,7 +96,7 @@ const Register = (props) => {
           value={playerName}
           onChange={onChange}
           required
-          placeholder="John Smith"
+          placeholder="Jane Smith"
           />
           <label htmlFor="email">Email</label>
           <input
@@ -83,7 +114,7 @@ const Register = (props) => {
           value={password}
           onChange={onChange}
           required
-          minLength="6"
+          minLength={minPasswordLength} 
           placeholder="Password"                
           autoComplete="on" 
           />
@@ -94,7 +125,7 @@ const Register = (props) => {
           value={password2}
           onChange={onChange}
           required
-          minLength="6"
+          minLength={minPasswordLength}
           placeholder="Confirm Password"
           autoComplete="on" 
           />
@@ -102,12 +133,12 @@ const Register = (props) => {
         <div className="reg-form char-form">
           <label htmlFor="photoupload">Character Image (optional)</label>
           <input id="photoupload"  name="photoupload" onChange={uploadFile} type="file" accept="image/*" />
-          <UserImage image={userPic}/> 
-          <label htmlFor="charName">Player Name</label>
+          <UserImage image={characterImage}/> 
+          <label htmlFor="characterName">Character Name</label>
           <input
           type="text"
-          name="charName"
-          value={charName}
+          name="characterName"
+          value={characterName}
           onChange={onChange}
           required
           placeholder="Dr. Prextron Deviatree"

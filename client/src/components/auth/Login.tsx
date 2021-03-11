@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect, Fragment } from "react";
 import NavBar from "../NavBar";
+import Book from "../Book";
 // import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
 import { Link } from "react-router-dom";
@@ -10,10 +11,7 @@ import { Auth } from 'aws-amplify';
 const Login = (props:any) => {
   let submitting:boolean=false; // We want to avoid submitted user information while waiting for a response from AWS
   const alertContext = useContext(AlertContext);
-  // const authContext = useContext(AuthContext);
-
   const { setAlert } = alertContext;
-  // const { loginUser, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
     Auth.currentAuthenticatedUser()
@@ -49,22 +47,34 @@ const Login = (props:any) => {
         // don't do anything--we don't want to flood the system with login calls.
     }else {
       submitting=true;
+      // Turn on loading image
+      (document.getElementsByClassName("frame") as HTMLCollectionOf<HTMLElement>)[0].style.display="block";
+
       Auth.signIn(username, password)
-      .then((res)=>{
+      .then((res)=>{ 
         console.log(res);
         submitting=false;
-        // props.history.push("/");
+      // Turn off loading image
+      (document.getElementsByClassName("frame") as HTMLCollectionOf<HTMLElement>)[0].style.display="hidden";
         window.location.href = '/'; 
       })
       .catch(err=>{        
+        (document.getElementsByClassName("frame") as HTMLCollectionOf<HTMLElement>)[0].style.display="hidden";
+        if(err.code==="UserNotConfirmedException"){
+          window.location.href = '/confirm';         
+        }
+        else {
+        console.log(err);
         setAlert(err.message, "danger");
+        }
       })
     }
   };
 
   return (
     <Fragment>
-         <NavBar />
+        <Book display={submitting} />
+        <NavBar />
         <div className="form-container main">
           <h1>
             Account <span>Login</span>
@@ -103,29 +113,4 @@ const Login = (props:any) => {
     </Fragment>
   );
 };
-
-// const LoginStyle = styled.div`
-//   height: 100%;
-//   width: 100%;
-//   margin: auto;
-//   vertical-align: center;
-//   text-align: center;
-//   margin-top: 30rem;
-//   align-items: center;
-//   h1 {
-//     color: white;
-//   }
-//   label {
-//     color: #23d997;
-//     padding-right: 2rem;
-//     text-align: right;
-//   }
-//   input {
-//     display: block;
-//     width: 100%;
-//     padding: 0.4rem;
-//     font-size: 1.2rem;
-//     border: 1px solid #ccc;
-//   }
-// `;
 export default Login;

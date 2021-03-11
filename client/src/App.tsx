@@ -14,10 +14,12 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 // // auth components
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+import Confirm from "./components/auth/Confirm";
 import Alert from "./utils/Alerts";
 
 // Pages
 import Landing from "./pages/Landing";
+import Admin from "./pages/Admin";
 import Test from "./pages/Test";
 
 import awsconfig from './aws-exports'; 
@@ -42,6 +44,14 @@ function App() {
     });
     console.log(user);
   }
+  async function fetchSongs(){
+    try{
+      const songData=await API.graphQL
+    }
+    catch(err){
+
+    }
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -51,7 +61,9 @@ function App() {
                 <Alert />
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/confirm" component={Confirm} />
                 <Route exact path="/login" component={Login} />            
+                <PrivateRoute path="/admin" user={user} component={Admin}/>        
                 <PrivateRoute path="/test" user={user} component={Test}/>        
               </Router>
           </AlertState>

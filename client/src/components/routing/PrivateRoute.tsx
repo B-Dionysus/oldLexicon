@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
+import AWSContext from "../../context/auth/AWSContext";
 // import { Auth } from 'aws-amplify';
 // import AuthContext from "../../context/auth/authContext";
 interface PrivateRouteProps {
@@ -11,16 +12,25 @@ interface PrivateRouteProps {
 
 const PrivateRoute = (props:PrivateRouteProps) => {
   
+  const awsContext = useContext(AWSContext); 
+  console.log("props");
   console.log(props.user);
-  // useEffect(()=>{
-  //   if(!user && !props.user) 
-  //     console.log("NOTHING");
-  //   else{      
-  //     console.log(props.user);
-  //   }  
-  // }, [])
-  // const authContext = useContext(AuthContext);
+
+  useEffect(()=>{
+    if(!awsContext.user) 
+      {
+        console.log("NOTHING");
+        awsContext.checkUser();
+    }
+    else{      
+      console.log("Something");
+      console.log(awsContext.user);
+    }  
+  }, []);
+
   const { component: Component, user, ...rest } = props;
+  
+  console.log("aws");
   console.log(user);
   // const { isAuthenticated, loading } = authContext;
 

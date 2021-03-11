@@ -46,3 +46,7 @@
   color:black;
   background: rgb(155, 76, 76);
 }
+.alert-success{
+  color:black;
+  background: rgb(76, 155, 76);
+}

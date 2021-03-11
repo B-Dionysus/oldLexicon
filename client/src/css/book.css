@@ -23,6 +23,8 @@
     background:url(https://www.nasa.gov/sites/default/files/1-bluemarble_west.jpg);
     background-size:cover;
     filter: hue-rotate(45deg);
+    display:none;
+    z-index:10;
 }
 @keyframes bookAnim{
     0% {background-position-x:0%;background-position-y:0%;}

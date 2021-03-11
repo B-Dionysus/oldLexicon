@@ -1,29 +1,10 @@
-.reg-main{
-    background:black;
+.main{
+    background:blue;
     height:90vh;
     width:95vw;
     padding:.25em;
     background-image:url(https://lexicon-image-storage.s3.amazonaws.com/testImage/sky.png);
     background-size: 3px;
-    text-align: center;
-}
-input{
-    display:block;
-    margin-left: auto;
-    margin-right: auto;
-}
-.reg-form{
-    position: relative;
-    border: 1px solid black;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 2em;
-    z-index: 4;
-    margin-top: 1em;
-}
-input{
-    
     color:black;
 }
 .cloud{
@@ -33,7 +14,7 @@ input{
     height:117px;
     animation-iteration-count: infinite;
     overflow:hidden;
-
+    z-index:0;
 }
 @keyframes cloud1{
     0% {left:0px;}

@@ -43,7 +43,10 @@ const NavBar = () => {
         </>
       ) : 
       (
-        <span className="" onClick={logout}>Logout (AWS)</span>
+        <>
+          <NavLink to="admin">Admin</NavLink>  
+          <span className="navButton" onClick={logout}>Logout (AWS)</span>
+        </>
       )}
     </nav>
   );
