@@ -21,7 +21,6 @@ import Alert from "./utils/Alerts";
 import Landing from "./pages/Landing";
 import Admin from "./pages/Admin";
 import Test from "./pages/Test";
-
 import awsconfig from './aws-exports'; 
 Amplify.configure(awsconfig);
 
@@ -32,7 +31,7 @@ function App() {
   useEffect(()=>{    
     checkUser();
   }, []);
-  
+
   function checkUser(){
     Auth.currentAuthenticatedUser()
     .then((res)=>{
@@ -40,18 +39,11 @@ function App() {
     })
     .catch(err=>{
       console.log("ERR "+err);
-      setUser({});
+      setUser({"status":"NONE"});
     });
     console.log(user);
   }
-  async function fetchSongs(){
-    try{
-      const songData=await API.graphQL
-    }
-    catch(err){
 
-    }
-  }
   return (
     <div className="App">
       <header className="App-header">

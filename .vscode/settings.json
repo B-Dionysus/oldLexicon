@@ -9,8 +9,9 @@
     "amplify/backend/awscloudformation": true
   },
   "favorites.resources": [
-    "client\\src\\components\\auth\\Login.tsx",
-    "client\\src\\App.tsx",
-    "client\\src\\css\\navBar.css"
+    "client\\src\\components",
+    "client\\src\\context",
+    "client\\src\\pages",
+    "client\\src\\css"
   ]
 }

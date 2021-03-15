@@ -1,8 +1,8 @@
-type Song @model {
+type Game @model {
   id: ID!
   title: String!
   description: String!
-  filePth: String!
-  likes:Int!
-  owner:String!
+  image: String
+  creatorId:String!
+  categories:[String!]
 }

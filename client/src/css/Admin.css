@@ -7,6 +7,13 @@
     background-size: 3px;
     color:black;
 }
+.create{
+    text-align:left;
+}
+.rounds{
+    margin-left:0;
+}
+
 .cloud{
     background-image: url(https://lexicon-image-storage.s3.amazonaws.com/testImage/cloud.png);
     position:absolute;

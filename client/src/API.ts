@@ -2,24 +2,24 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateGameInput = {
+export type CreateSongInput = {
   id?: string | null,
   title: string,
   description: string,
-  image?: string | null,
-  creatorId: string,
-  categories?: Array< string > | null,
+  filePth: string,
+  likes: number,
+  owner: string,
 };
 
-export type ModelGameConditionInput = {
+export type ModelSongConditionInput = {
   title?: ModelStringInput | null,
   description?: ModelStringInput | null,
-  image?: ModelStringInput | null,
-  creatorId?: ModelStringInput | null,
-  categories?: ModelStringInput | null,
-  and?: Array< ModelGameConditionInput | null > | null,
-  or?: Array< ModelGameConditionInput | null > | null,
-  not?: ModelGameConditionInput | null,
+  filePth?: ModelStringInput | null,
+  likes?: ModelIntInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelSongConditionInput | null > | null,
+  or?: Array< ModelSongConditionInput | null > | null,
+  not?: ModelSongConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -62,41 +62,53 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type Game = {
-  __typename: "Game",
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type Song = {
+  __typename: "Song",
   id?: string,
   title?: string,
   description?: string,
-  image?: string | null,
-  creatorId?: string,
-  categories?: Array< string > | null,
+  filePth?: string,
+  likes?: number,
+  owner?: string,
   createdAt?: string,
   updatedAt?: string,
 };
 
-export type UpdateGameInput = {
+export type UpdateSongInput = {
   id: string,
   title?: string | null,
   description?: string | null,
-  image?: string | null,
-  creatorId?: string | null,
-  categories?: Array< string > | null,
+  filePth?: string | null,
+  likes?: number | null,
+  owner?: string | null,
 };
 
-export type DeleteGameInput = {
+export type DeleteSongInput = {
   id?: string | null,
 };
 
-export type ModelGameFilterInput = {
+export type ModelSongFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
   description?: ModelStringInput | null,
-  image?: ModelStringInput | null,
-  creatorId?: ModelStringInput | null,
-  categories?: ModelStringInput | null,
-  and?: Array< ModelGameFilterInput | null > | null,
-  or?: Array< ModelGameFilterInput | null > | null,
-  not?: ModelGameFilterInput | null,
+  filePth?: ModelStringInput | null,
+  likes?: ModelIntInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelSongFilterInput | null > | null,
+  or?: Array< ModelSongFilterInput | null > | null,
+  not?: ModelSongFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -115,104 +127,104 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type ModelGameConnection = {
-  __typename: "ModelGameConnection",
-  items?:  Array<Game | null > | null,
+export type ModelSongConnection = {
+  __typename: "ModelSongConnection",
+  items?:  Array<Song | null > | null,
   nextToken?: string | null,
 };
 
-export type CreateGameMutationVariables = {
-  input?: CreateGameInput,
-  condition?: ModelGameConditionInput | null,
+export type CreateSongMutationVariables = {
+  input?: CreateSongInput,
+  condition?: ModelSongConditionInput | null,
 };
 
-export type CreateGameMutation = {
-  createGame?:  {
-    __typename: "Game",
+export type CreateSongMutation = {
+  createSong?:  {
+    __typename: "Song",
     id: string,
     title: string,
     description: string,
-    image?: string | null,
-    creatorId: string,
-    categories?: Array< string > | null,
+    filePth: string,
+    likes: number,
+    owner: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateGameMutationVariables = {
-  input?: UpdateGameInput,
-  condition?: ModelGameConditionInput | null,
+export type UpdateSongMutationVariables = {
+  input?: UpdateSongInput,
+  condition?: ModelSongConditionInput | null,
 };
 
-export type UpdateGameMutation = {
-  updateGame?:  {
-    __typename: "Game",
+export type UpdateSongMutation = {
+  updateSong?:  {
+    __typename: "Song",
     id: string,
     title: string,
     description: string,
-    image?: string | null,
-    creatorId: string,
-    categories?: Array< string > | null,
+    filePth: string,
+    likes: number,
+    owner: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteGameMutationVariables = {
-  input?: DeleteGameInput,
-  condition?: ModelGameConditionInput | null,
+export type DeleteSongMutationVariables = {
+  input?: DeleteSongInput,
+  condition?: ModelSongConditionInput | null,
 };
 
-export type DeleteGameMutation = {
-  deleteGame?:  {
-    __typename: "Game",
+export type DeleteSongMutation = {
+  deleteSong?:  {
+    __typename: "Song",
     id: string,
     title: string,
     description: string,
-    image?: string | null,
-    creatorId: string,
-    categories?: Array< string > | null,
+    filePth: string,
+    likes: number,
+    owner: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type GetGameQueryVariables = {
+export type GetSongQueryVariables = {
   id?: string,
 };
 
-export type GetGameQuery = {
-  getGame?:  {
-    __typename: "Game",
+export type GetSongQuery = {
+  getSong?:  {
+    __typename: "Song",
     id: string,
     title: string,
     description: string,
-    image?: string | null,
-    creatorId: string,
-    categories?: Array< string > | null,
+    filePth: string,
+    likes: number,
+    owner: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type ListGamesQueryVariables = {
-  filter?: ModelGameFilterInput | null,
+export type ListSongsQueryVariables = {
+  filter?: ModelSongFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListGamesQuery = {
-  listGames?:  {
-    __typename: "ModelGameConnection",
+export type ListSongsQuery = {
+  listSongs?:  {
+    __typename: "ModelSongConnection",
     items?:  Array< {
-      __typename: "Game",
+      __typename: "Song",
       id: string,
       title: string,
       description: string,
-      image?: string | null,
-      creatorId: string,
-      categories?: Array< string > | null,
+      filePth: string,
+      likes: number,
+      owner: string,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -220,43 +232,43 @@ export type ListGamesQuery = {
   } | null,
 };
 
-export type OnCreateGameSubscription = {
-  onCreateGame?:  {
-    __typename: "Game",
+export type OnCreateSongSubscription = {
+  onCreateSong?:  {
+    __typename: "Song",
     id: string,
     title: string,
     description: string,
-    image?: string | null,
-    creatorId: string,
-    categories?: Array< string > | null,
+    filePth: string,
+    likes: number,
+    owner: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdateGameSubscription = {
-  onUpdateGame?:  {
-    __typename: "Game",
+export type OnUpdateSongSubscription = {
+  onUpdateSong?:  {
+    __typename: "Song",
     id: string,
     title: string,
     description: string,
-    image?: string | null,
-    creatorId: string,
-    categories?: Array< string > | null,
+    filePth: string,
+    likes: number,
+    owner: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeleteGameSubscription = {
-  onDeleteGame?:  {
-    __typename: "Game",
+export type OnDeleteSongSubscription = {
+  onDeleteSong?:  {
+    __typename: "Song",
     id: string,
     title: string,
     description: string,
-    image?: string | null,
-    creatorId: string,
-    categories?: Array< string > | null,
+    filePth: string,
+    likes: number,
+    owner: string,
     createdAt: string,
     updatedAt: string,
   } | null,
