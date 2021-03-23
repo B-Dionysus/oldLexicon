@@ -15,80 +15,76 @@ import Edit from "../components/admin/Edit"
 const Admin = (props) => {  
   const awsContext = useContext(AWSContext); 
   const {user} = awsContext;
+  let userId;
   const [adminState, setAdminState] = useState("create");
-  const [gameIdToEdit, setGameIdToEdit] = useState("1615836454044.721679688");
   const [gameState, setGames]=useState([]);
-  async function makeGame(){
-    try{
-      // Stack overflow discussion on client-generated unique ids: 
-      // https://stackoverflow.com/questions/8012002/create-a-unique-number-with-javascript-time
-      const game={};
-      game.id=(Date.now() + Math.random()).toString;
-      game.title= "The Book of Old Changes"
-      game.description= "This is about a book of changes. But not recent ones";
-      // let image=String
-      game.createrId="userIdGoesHere";
-      game.categories=["A, B, C, or D", "E, F, G, or H", "I, J, K, or L", "M, N, O or P", "Q, R, S, or T", "U, V, W, X, Y, or Z"];
-      const gameData=await API.graphql(graphqlOperation(createGame, {input:game}));
-      console.log(gameData);
+  const [bookDisplay, setBook]=useState("none");
+  useEffect(()=>{
+    if(user.attributes){
+      userId=user.attributes.sub;
+      fetchGames(userId);  
     }
-    catch(err){
-      console.log(err);
-    }
-  }
-  async function addLike(id){
-    try{
-      const game=gameState[id];
-      game.likes=game.likes+1;
-      delete game.createdAt;
-      delete game.updatedAt;
-      console.log(game);
-      const gameData=await API.graphql(graphqlOperation(updateGame, {input:game}));
-      const newList=[...gameState];
-      newList[id]=gameData.data.updateSong;
-      setGames(newList);
-      document.getElementById("textarea").innerHTML="";
-      for(let song of gameState){
-        document.getElementById("textarea").innerHTML+=`<p>${game.title}: ${game.description}--${game.likes}</p>`;
-      }
-    }
-    catch(err){      
-      console.log(err);
-    }
-  }
-  function editGame(){
-    setAdminState("edit");
-  }
-  async function fetchGames(){
+  },[user]);
+    
+  useEffect(()=>{    
+    document.getElementById("book").style.display=bookDisplay;
+    console.log(bookDisplay);
+    console.log(document.getElementById("book").style.display=bookDisplay);
+
+  },[bookDisplay]);
+
+  async function fetchGames(id){
+    let ug=updateGame;
     try{
       console.log("List Games");
-      const gameData=await API.graphql(graphqlOperation(listGames));
+      console.log(id);
+      const gameData=await API.graphql(graphqlOperation(listGames,
+        {
+          filter:
+          {
+            creatorId:{eq:id}, 
+            title:{ne:""}
+          }
+        }));
+      console.log(gameData);
 
       const gameList=gameData.data.listGames.items;
       setGames(gameList);
-      document.getElementById("textarea").innerHTML="";
-      for(let game of gameState){
-        document.getElementById("textarea").innerHTML+=`<p>${game.title}: ${game.description}--${game.image}</p>`;
+      let dropDown="";
+      console.log(gameList.length);
+      if(gameList.length>0){
+        dropDown="<label for='selectGame'>Edit: </label>";
+        dropDown+=`<select name='selectGame' id='selectGame'>`;
+        for(let game of gameList){
+          dropDown+=`<option value="${game.id}">${game.title}</option>`;
+        }
+        dropDown+="</select>"
       }
+      document.getElementById("textarea").innerHTML=dropDown;
     }
     catch(err){
-      console.log(err);
-    }
-
+      console.error(err);
+    }    
   }
-  console.log(adminState);
+  function loading(show){
+    if(show) setBook("block");
+    else {
+       setBook("none");
+      }
+  }
   return (
     <>
       <NavBar />
+        <Book display={bookDisplay}/>
         <div className="main">
           <div className="adminNav">
             <button onClick={()=>{setAdminState("create")}}>Create game</button>
             <button onClick={()=>{setAdminState("edit")}}>Edit Game</button>
+            <div id="textarea"><label htmlFor='selectGame'>Edit:</label><select name='selectGame' id='selectGame'></select></div>
           </div>
-          {adminState==="create" ? (<Create user={user} />) : (<></>)}
-          {adminState==="edit" ? (<Edit user={user} gameId={gameIdToEdit}/>) : (<></>)}
+          {adminState==="create" ? (<Create user={user} refresh={fetchGames} loadScreen={loading}/>) : (<></>)}
+          {adminState==="edit" ? (<Edit user={user}/>) : (<></>)}
         </div>
-        <Book />
     </>
   );
 };

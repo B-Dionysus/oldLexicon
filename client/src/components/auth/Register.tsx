@@ -1,6 +1,6 @@
 
 
-import React, { useContext, useState, useEffect, Fragment } from "react";
+import { useContext, useState } from "react";
 import NavBar from "../NavBar";
 import Book from "../Book";
 import AlertContext from "../../context/alert/alertContext";
@@ -83,7 +83,7 @@ const Register = () => {
   };
   let minPasswordLength = 6;
   return (
-    <>
+    <> 
       <NavBar />
       <Book display={submitting} />
       <div className="reg-main">

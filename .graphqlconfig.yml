@@ -1,15 +1,15 @@
 projects:
   lexicon:
-    schemaPath: src/graphql/schema.json
+    schemaPath: client/src/graphql/schema.json
     includes:
-      - src/graphql/**/*.ts
+      - client/src/graphql/**/*.ts
     excludes:
       - ./amplify/**
     extensions:
       amplify:
         codeGenTarget: typescript
-        generatedFileName: src/API.ts
-        docsFilePath: src/graphql
+        generatedFileName: client/src/API.ts
+        docsFilePath: client/src/graphql
 extensions:
   amplify:
     version: 3

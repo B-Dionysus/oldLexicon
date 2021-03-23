@@ -12,8 +12,17 @@
 }
 .rounds{
     margin-left:0;
+    margin-right:1em;
 }
-
+.gameLogoSpan{
+}
+.roundsAndImage{
+    display:flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+}
+.roundSpan{
+}
 .cloud{
     background-image: url(https://lexicon-image-storage.s3.amazonaws.com/testImage/cloud.png);
     position:absolute;

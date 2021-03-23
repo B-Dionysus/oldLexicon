@@ -5,4 +5,27 @@ type Game @model {
   image: String
   creatorId:String!
   categories:[String!]
+  posts:[Post]
+  players:[User]
+}
+
+type Post @model{
+  id:ID!
+  creatorId:String!
+  name: String!
+  displayName:String!
+  body: String!
+  round:Int!
+  links:[Post]
+  image: String  
+}
+
+type User @model{
+  id:ID!
+  secruityLevel:Int!
+  image: String
+  playerName: String!
+  characterName: String!
+  posts:[Post]
+  games:[Game]
 }

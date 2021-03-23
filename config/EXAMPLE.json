@@ -1,5 +1,0 @@
-{
-    "jwtSecret": "<INSERT KEY>",
-    "mongoURI": "<INSERT KEY>"
-
-}
