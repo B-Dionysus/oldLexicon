@@ -16,6 +16,11 @@
 }
 .gameLogoSpan{
 }
+.greyGrad{
+    background-image:linear-gradient(to bottom right, gray, white);
+    border:1px solid green;
+    padding:.5em;
+}
 .roundsAndImage{
     display:flex;
     justify-content: space-between;

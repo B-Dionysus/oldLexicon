@@ -12,13 +12,16 @@ import NavBar from "../components/NavBar";
 import {Paper} from "@material-ui/core";
 import Create from "../components/admin/Create"
 import Edit from "../components/admin/Edit"
-const Admin = (props) => {  
+const Admin = () => {  
   const awsContext = useContext(AWSContext); 
   const {user} = awsContext;
   let userId;
   const [adminState, setAdminState] = useState("create");
   const [gameState, setGames]=useState([]);
   const [bookDisplay, setBook]=useState("none");
+  const [gameId, setEdit]=useState("");
+
+  // When the user changes, get the titles of the games they have created
   useEffect(()=>{
     if(user.attributes){
       userId=user.attributes.sub;
@@ -26,6 +29,7 @@ const Admin = (props) => {
     }
   },[user]);
     
+  // Turn the loading icon ("book") on or off
   useEffect(()=>{    
     document.getElementById("book").style.display=bookDisplay;
     console.log(bookDisplay);
@@ -33,7 +37,8 @@ const Admin = (props) => {
 
   },[bookDisplay]);
 
-  async function fetchGames(id){
+  // Return an array of gmes created by this user
+  async function fetchGames(id:String){
     let ug=updateGame;
     try{
       console.log("List Games");
@@ -48,17 +53,18 @@ const Admin = (props) => {
         }));
       console.log(gameData);
 
-      const gameList=gameData.data.listGames.items;
+      const gameList:any=(gameData as any).data.listGames.items;
       setGames(gameList);
       let dropDown="";
       console.log(gameList.length);
       if(gameList.length>0){
         dropDown="<label for='selectGame'>Edit: </label>";
-        dropDown+=`<select name='selectGame' id='selectGame'>`;
+        dropDown+=`<select onChange="()=>{updateEdit(this.value);}" name='selectGame' id='selectGame'>`;
         for(let game of gameList){
           dropDown+=`<option value="${game.id}">${game.title}</option>`;
         }
         dropDown+="</select>"
+        setEdit(gameList[0].id);
       }
       document.getElementById("textarea").innerHTML=dropDown;
     }
@@ -66,11 +72,21 @@ const Admin = (props) => {
       console.error(err);
     }    
   }
-  function loading(show){
+  function updateEdit(val:String){
+    console.log(val);
+    console.log("Hi?");
+  }
+  // This could probably be greatly simplified, right?
+  function loading(show:Boolean){
     if(show) setBook("block");
     else {
        setBook("none");
       }
+  }
+  function editButton(){
+    let gameToEdit=(document.getElementById("selectGame") as HTMLInputElement).value;
+    setEdit(gameToEdit);      
+    setAdminState("edit");
   }
   return (
     <>
@@ -79,11 +95,11 @@ const Admin = (props) => {
         <div className="main">
           <div className="adminNav">
             <button onClick={()=>{setAdminState("create")}}>Create game</button>
-            <button onClick={()=>{setAdminState("edit")}}>Edit Game</button>
+            <button onClick={editButton}>Edit Game</button>
             <div id="textarea"><label htmlFor='selectGame'>Edit:</label><select name='selectGame' id='selectGame'></select></div>
           </div>
           {adminState==="create" ? (<Create user={user} refresh={fetchGames} loadScreen={loading}/>) : (<></>)}
-          {adminState==="edit" ? (<Edit user={user}/>) : (<></>)}
+          {adminState==="edit" ? (<Edit user={user} gameId={gameId}/>) : (<></>)}
         </div>
     </>
   );

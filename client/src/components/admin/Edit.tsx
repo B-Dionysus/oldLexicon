@@ -18,9 +18,9 @@ const Edit = (props:any) => {
         categories?:Array<String>;
     }
     useEffect(()=>{
-        let gameId=(document.getElementById("selectGame") as HTMLInputElement).value;
-        loadGame(gameId)
-    },[])
+        loadGame(props.gameId)
+    },[props.gameId]);
+
     useEffect(()=>{
         for(let [i,r] of (rounds as any).entries()){
             (document.getElementById("round"+i) as HTMLFormElement).value=r;
@@ -101,14 +101,14 @@ const Edit = (props:any) => {
     }
 
   return (
-    <div className="edit">
+    <div className="edit greyGrad">
         <form id="editGame" onSubmit={editGame}>
             <p><label htmlFor="title">Game Title.</label></p>
             <p><input type="text" name="title" size={40}></input></p>
             <p><label htmlFor="description">Description.</label></p>
             <p><textarea name="description" cols={40} rows={3}></textarea></p>
             <p><label htmlFor="categories">Rounds.</label></p>
-            <div className="roundsAndImage">
+            <div className="roundsAndImage ">
                 <span>
                     <span id="roundSpan">
                         {/* @ts-ignore */}
@@ -129,6 +129,6 @@ const Edit = (props:any) => {
         </form>
     </div>
   );
-};
+}; 
 
 export default Edit;

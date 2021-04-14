@@ -77,7 +77,7 @@ const Create = (props:any) => {
     }
 
   return (
-    <div className="create">
+    <div className="create greyGrad">
         <form id="createGame" onSubmit={makeGame}>
             <p><label htmlFor="title">Game Title. Something that will give the players ideas without being too limiting</label></p>
             <p><input type="text" name="title" size={40} placeholder="The Book of Lost Battlemagi"></input></p>

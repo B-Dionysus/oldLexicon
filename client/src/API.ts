@@ -194,6 +194,13 @@ export type DeleteUserInput = {
   id?: string | null,
 };
 
+export type BasicGameInfo = {
+  __typename: "BasicGameInfo",
+  id?: string | null,
+  title?: string | null,
+  creatorId?: string | null,
+};
+
 export type ModelGameFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -846,6 +853,20 @@ export type DeleteUserMutation = {
     } | null > | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type ListBasicGameInfoQueryVariables = {
+  creatorId?: string | null,
+  id?: string | null,
+};
+
+export type ListBasicGameInfoQuery = {
+  ListBasicGameInfo?:  {
+    __typename: "BasicGameInfo",
+    id?: string | null,
+    title?: string | null,
+    creatorId?: string | null,
   } | null,
 };
 
