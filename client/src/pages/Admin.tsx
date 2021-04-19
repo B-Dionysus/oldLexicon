@@ -1,7 +1,7 @@
 import '../css/Admin.css';
 import AWS from "aws-sdk"
-import Amplify, {Auth, API, graphqlOperation} from 'aws-amplify';
-
+import Amplify, {Auth, graphqlOperation} from 'aws-amplify';
+import API from "../utils/API"
 import {listGames} from "../graphql/queries";
 import {updateGame, createGame} from "../graphql/mutations";
 import { useState, useContext, useEffect } from "react";
@@ -21,11 +21,12 @@ const Admin = () => {
   const [bookDisplay, setBook]=useState("none");
   const [gameId, setEdit]=useState("");
 
+
   // When the user changes, get the titles of the games they have created
   useEffect(()=>{
     if(user.attributes){
       userId=user.attributes.sub;
-      fetchGames(userId);  
+      fetchGames(user.signInUserSession.idToken.jwtToken);  
     }
   },[user]);
     
@@ -38,25 +39,14 @@ const Admin = () => {
   },[bookDisplay]);
 
   // Return an array of gmes created by this user
-  async function fetchGames(id:String){
-    let ug=updateGame;
-    try{
-      console.log("List Games");
-      console.log(id);
-      const gameData=await API.graphql(graphqlOperation(listGames,
-        {
-          filter:
-          {
-            creatorId:{eq:id}, 
-            title:{ne:""}
-          }
-        }));
+  async function fetchGames(idToken:String){
+    let ug=updateGame;  
+    API.getGames(idToken)
+    .then((gameData)=>{
       console.log(gameData);
-
-      const gameList:any=(gameData as any).data.listGames.items;
+      const gameList:any=(gameData as any).data.titles;
       setGames(gameList);
       let dropDown="";
-      console.log(gameList.length);
       if(gameList.length>0){
         dropDown="<label for='selectGame'>Edit: </label>";
         dropDown+=`<select onChange="()=>{updateEdit(this.value);}" name='selectGame' id='selectGame'>`;
@@ -67,10 +57,10 @@ const Admin = () => {
         setEdit(gameList[0].id);
       }
       document.getElementById("textarea").innerHTML=dropDown;
-    }
-    catch(err){
+    })
+    .catch((err)=>{
       console.error(err);
-    }    
+    });
   }
   function updateEdit(val:String){
     console.log(val);
